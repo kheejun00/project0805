@@ -1,12 +1,12 @@
-<%@page import="model.BoardCon"%>
-<%@page import="model.MemberCon"%>
-<%@page import="model.BoardDAO"%>
-<%@page import="model.MemberDAO"%>
+<%@page import="repository.BoardRepository"%>
+<%@page import="repository.MemberRepository"%>
+<%@page import="dao.BoardDAO"%>
+<%@page import="dao.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-MemberCon mCon = new MemberDAO();
-BoardCon bCon = new BoardDAO();
+MemberRepository mDao = new MemberDAO();
+BoardRepository bDao = new BoardDAO();
 Object sessionMemberNo = session.getAttribute("memberNo");
 %>
 <!DOCTYPE html>
@@ -41,11 +41,11 @@ Object sessionMemberNo = session.getAttribute("memberNo");
                 <%
                 if(sessionMemberNo!=null){
                 %>
-                <li><a href="./myPage/myPage.jsp">MyPage</a></li>
-				<li><a href="logout.jsp">Logout</a></li>
+                <li><a href="./member/myPage/myPage.jsp">MyPage</a></li>
+				<li><a href="./member/controller/logoutController.jsp">Logout</a></li>
                 <%}else{ %>
-                <li><a href="login.jsp">Login</a></li>
-                <li><a href="join.jsp">Join</a></li>
+                <li><a href="./member/login.jsp">Login</a></li>
+                <li><a href="./member/join.jsp">Join</a></li>
                 <%} %>
                 <li><a href="#">Sitemap</a></li>
             </ul>

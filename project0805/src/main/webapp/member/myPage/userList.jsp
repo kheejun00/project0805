@@ -1,15 +1,14 @@
-<%@page import="model.Member"%>
-<%@page import="model.MemberCon"%>
-<%@page import="model.MemberDAO"%>
-<%@page import="model.Board"%>
+<%@page import="dto.MemberDTO"%>
+<%@page import="repository.MemberRepository"%>
+<%@page import="dao.MemberDAO"%>
 <%@page import="java.util.List"%>
-<%@page import="model.BoardDAO"%>
-<%@page import="model.BoardCon"%>
+<%@page import="dao.BoardDAO"%>
+<%@page import="repository.BoardRepository"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-MemberCon mCon = new MemberDAO();
-List<Member> list = mCon.getMembers();
+MemberRepository dao = new MemberDAO();
+List<MemberDTO> list = dao.getMembers();
 %>
 <!DOCTYPE html>
 <html>
@@ -35,21 +34,20 @@ List<Member> list = mCon.getMembers();
     </tr>
     
 <%
-for(Member member : list){
+for(MemberDTO dto: list){
 	%>
 	<tr>
-		<td><%=member.getMemberNo() %></td>
-		<td><%=member.getId()%></td>
-		<td><%=member.getNickname() %></td>
-		<td><%=member.getTel() %></td>
-		<td><%=member.getEmail() %></td>
+		<td><%=dto.getMemberNo() %></td>
+		<td><%=dto.getId()%></td>
+		<td><%=dto.getNickname() %></td>
+		<td><%=dto.getTel() %></td>
+		<td><%=dto.getEmail() %></td>
 	</tr>
 <%
 }
 %>
 </table>
 <br>
-<input type="button" value="ㅇ" onclick="location.href='../community/write.jsp'">
-<input type="button" value="이전" onclick="location.href='../index.jsp'">
+<input type="button" value="이전" onclick="location.href='../../index.jsp'">
 </body>
 </html>

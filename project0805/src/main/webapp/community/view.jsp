@@ -1,8 +1,8 @@
-<%@page import="model.MemberCon"%>
-<%@page import="model.MemberDAO"%>
-<%@page import="model.Board"%>
-<%@page import="model.BoardDAO"%>
-<%@page import="model.BoardCon"%>
+<%@page import="dto.BoardDTO"%>
+<%@page import="repository.MemberRepository"%>
+<%@page import="dao.MemberDAO"%>
+<%@page import="dao.BoardDAO"%>
+<%@page import="repository.BoardRepository"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -21,51 +21,51 @@
 <table>
 <%
 String temp = null;
-int no = (temp = request.getParameter("boardNo"))==null?1:Integer.parseInt(temp);
-int memberNo = 0;
+int bNo = (temp = request.getParameter("boardNo"))==null?1:Integer.parseInt(temp);
+int mNo = 0;
 if(session.getAttribute("memberNo")!=null){
-	memberNo = (Integer)session.getAttribute("memberNo");
+	mNo = (Integer)session.getAttribute("memberNo");
 }
-BoardCon bCon = new BoardDAO();
-MemberCon mCon = new MemberDAO();
-bCon.increaseHits(no);
-Board board = bCon.getBoard(no);
+BoardRepository bDao = new BoardDAO();
+MemberRepository mDao = new MemberDAO();
+bDao.increaseHits(bNo);
+BoardDTO dto = bDao.getBoard(bNo);
 %>
     <tr>
         <th>제목</th>
-        <td><%=board.getTitle() %></td>
+        <td><%=dto.getTitle() %></td>
     </tr>
     <tr>
         <th>작성자</th>
-        <td><%=mCon.getMember(board.getMemberNo()).getNickname()%></td>
+        <td><%=mDao.getMember(dto.getMemberNo()).getNickname()%></td>
     </tr>
     <tr>
         <th>작성일시</th>
-        <td><%=board.getRegtime() %></td>
+        <td><%=dto.getRegtime() %></td>
     </tr>
     <tr>
         <th>최근 수정된 날짜</th>
-        <td><%=board.getUpRegtime() %></td>
+        <td><%=dto.getUpRegtime() %></td>
     </tr>
     <tr>
         <th>조회수</th>
-        <td><%=board.getHits() %></td>
+        <td><%=dto.getHits() %></td>
     </tr>
     <tr>
         <th>내용</th>
-        <td><%=board.getContent() %></td>
+        <td><%=dto.getContent() %></td>
     </tr>
 </table>
 
 <br>
 <input type="button" value="목록보기" onclick="location.href='list.jsp'">
 <%
-if(bCon.isUpdatable(no, memberNo)){
+if(bDao.isWriter(bNo, mNo) || mDao.isAdmin(mNo)){
 %>
 <input type="button" value="수정"
-       onclick="location.href='write2.jsp?boardNo=<%=board.getBoardNo()%>'">
+       onclick="location.href='update.jsp?boardNo=<%=dto.getBoardNo()%>'">
 <input type="button" value="삭제"
-       onclick="location.href='delete.jsp?boardNo=<%=board.getBoardNo()%>'">
+       onclick="location.href='./controller/deleteController.jsp?boardNo=<%=dto.getBoardNo()%>'">
        
 <%} %>
 

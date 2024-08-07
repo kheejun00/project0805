@@ -1,18 +1,17 @@
-<%@page import="model.Member"%>
-<%@page import="model.MemberDAO"%>
-<%@page import="model.MemberCon"%>
-<%@page import="model.Board"%>
-<%@page import="model.BoardCon"%>
-<%@page import="model.BoardDAO"%>
+<%@page import="dto.MemberDTO"%>
+<%@page import="dao.MemberDAO"%>
+<%@page import="repository.MemberRepository"%>
+<%@page import="repository.BoardRepository"%>
+<%@page import="dao.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-MemberCon dao = new MemberDAO();
-Member member = null;
-int memberNo = 0;
+MemberRepository dao = new MemberDAO();
+MemberDTO dto = null;
+int mNo = 0;
 if(session.getAttribute("memberNo")!=null){
-	memberNo = (Integer)session.getAttribute("memberNo");
-	member = dao.getMember(memberNo);
+	mNo = (Integer)session.getAttribute("memberNo");
+	dto = dao.getMember(mNo);
 }
 %>
 <!DOCTYPE html>
@@ -28,24 +27,24 @@ if(session.getAttribute("memberNo")!=null){
 </head>
 <body>
 <%
-if(member==null){
+if(dto==null){
 %>
 게시판 번호에 해당하는 글이 없음
 <%
-}else if(dao.isAdmin(memberNo)){ 
+}else if(dao.isAdmin(mNo)){ 
 %>
 <input type="button" value="유저 정보 조회" onClick="location.href='./userList.jsp'">
 <%}else{ %>
-이름:<%=member.getName() %><br>
-생년월일:<%=member.getBirth() %><br>
-아이디:<%=member.getId() %><br>
-닉네임:<%=member.getNickname() %><br>
-비밀번호:<%=member.getPw() %><br>
-전화번호:<%=member.getTel() %><br>
-이메일:<%=member.getEmail() %><br>
+이름:<%=dto.getName() %><br>
+생년월일:<%=dto.getBirth() %><br>
+아이디:<%=dto.getId() %><br>
+닉네임:<%=dto.getNickname() %><br>
+비밀번호:<%=dto.getPw() %><br>
+전화번호:<%=dto.getTel() %><br>
+이메일:<%=dto.getEmail() %><br>
 <input type = "button" value="내 정보 수정" onClick="location.href='../update.jsp'">
 <%} %>
 <input type="button" value="내 작성글 확인" onClick="location.href='./list.jsp'">
-<input type="button" value="이전" onClick="location.href='../index.jsp'">
+<input type="button" value="이전" onClick="location.href='../../index.jsp'">
 </body>
 </html>

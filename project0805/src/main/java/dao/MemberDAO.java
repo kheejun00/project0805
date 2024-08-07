@@ -1,4 +1,4 @@
-package model;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,26 +7,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.MemberDTO;
+import repository.MemberRepository;
 import util.JDBCUtil;
 
-public class MemberDAO implements MemberCon{
+public class MemberDAO implements MemberRepository{
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
 	//로그인
 	public boolean login(String id, String pw) {
-		List<Member> list = getMembers();
-		for(Member memberDTO : list) {
-			if(memberDTO.getId().equals(id)&&memberDTO.getPw().equals(pw)) {
+		List<MemberDTO> list = getMembers();
+		for(MemberDTO dto : list) {
+			if(dto.getId().equals(id)&&dto.getPw().equals(pw)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public List<Member> getMembers(){
-		List<Member> list = new ArrayList<>();
+	public List<MemberDTO> getMembers(){
+		List<MemberDTO> list = new ArrayList<>();
 		con = JDBCUtil.getConnection();
 		try {
 			pstmt = con.prepareStatement(SELECT_ALL);
@@ -45,18 +47,18 @@ public class MemberDAO implements MemberCon{
 		return list;
 	}
 	//가입
-	public boolean join(Member member) {
+	public boolean join(MemberDTO dto) {
 		con = JDBCUtil.getConnection();
 		boolean result = false;
 		try {
 			pstmt = con.prepareStatement(INSERT_MEMBER);
-			pstmt.setString(1, member.getName());
-			pstmt.setString(2, member.getBirth());
-			pstmt.setString(3, member.getId());
-			pstmt.setString(4, member.getNickname());
-			pstmt.setString(5, member.getPw());
-			pstmt.setString(6, member.getTel());
-			pstmt.setString(7, member.getEmail());
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getBirth());
+			pstmt.setString(3, dto.getId());
+			pstmt.setString(4, dto.getNickname());
+			pstmt.setString(5, dto.getPw());
+			pstmt.setString(6, dto.getTel());
+			pstmt.setString(7, dto.getEmail());
 			if(pstmt.executeUpdate()!=1) throw new SQLException();
 			result = true;
 		}catch(SQLException e) {
@@ -68,9 +70,9 @@ public class MemberDAO implements MemberCon{
 	}
 	
 	//현재 로그인한 사용자 정보 읽기
-	public Member getMember(int no) {
+	public MemberDTO getMember(int no) {
 		con = JDBCUtil.getConnection();
-		Member rsDto = null;
+		MemberDTO rsDto = null;
 		try {
 			pstmt = con.prepareStatement(SELECT_ONE);
 			pstmt.setInt(1, no);
@@ -88,9 +90,9 @@ public class MemberDAO implements MemberCon{
 		return rsDto;
 	}
 	
-	public Member getMember(String id) {
+	public MemberDTO getMember(String id) {
 		con = JDBCUtil.getConnection();
-		Member rsDto = null;
+		MemberDTO rsDto = null;
 		try {
 			pstmt = con.prepareStatement(SELECT_WHERE_ID);
 			pstmt.setString(1, id);
@@ -113,18 +115,18 @@ public class MemberDAO implements MemberCon{
 	}
 	
 	//회원정보 수정
-	public void updateMember(Member member) {
+	public void updateMember(MemberDTO dto) {
 		try {
-			if(!isExist(member.getMemberNo())) {throw new SQLException();}
+			if(!isExist(dto.getMemberNo())) {throw new SQLException();}
 			con = JDBCUtil.getConnection();
 			pstmt = con.prepareStatement(UPDATE_MEMBER);
-			pstmt.setString(1, member.getName());
-			pstmt.setString(2, member.getBirth());
-			pstmt.setString(3, member.getNickname());
-			pstmt.setString(4, member.getPw());
-			pstmt.setString(5, member.getTel());
-			pstmt.setString(6, member.getEmail());
-			pstmt.setInt(7, member.getMemberNo());
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getBirth());
+			pstmt.setString(3, dto.getNickname());
+			pstmt.setString(4, dto.getPw());
+			pstmt.setString(5, dto.getTel());
+			pstmt.setString(6, dto.getEmail());
+			pstmt.setInt(7, dto.getMemberNo());
 			pstmt.executeUpdate();
 		}catch(SQLException e) {
 			System.out.println("UpdateMember Failed");
@@ -150,4 +152,5 @@ public class MemberDAO implements MemberCon{
 		}
 		return result;
 	}
+
 }

@@ -12,7 +12,7 @@
     <script src="js/ie.js"></script>
 </head>
 <body>
-<form action="joinController.jsp"method="post">
+<form action="./controller/joinController.jsp"method="post">
 이름:<input type = "text" name="name"><br>
 생년월일:<input type = "text" name="birth"><br>
 아이디:<input type = "text" name="id"><br>

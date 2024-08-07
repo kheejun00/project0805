@@ -1,17 +1,39 @@
-<%@page import="model.MemberCon"%>
-<%@page import="model.MemberDAO"%>
-<%@page import="model.BoardDTO"%>
-<%@page import="model.BoardDAO"%>
-<%@page import="model.BoardCon"%>
+<%@page import="repository.MemberRepository"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-request.setCharacterEncoding("utf-8");
-BoardCon bCon = new BoardDAO();
-MemberCon mCon = new MemberDAO();
-int no = Integer.parseInt(request.getParameter("memberNo"));
-System.out.println(no);
-bCon.insertBoard(new BoardDTO(request.getParameter("title"),"날짜","수정일",0,
-		no,request.getParameter("content")));
-response.sendRedirect("list.jsp");
 %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        table { width:680px; text-align:center; }
+        th    { width:100px; background-color:cyan; }
+        input[type=text], textarea { width:100%; }
+    </style>
+</head>
+<body>
+<form method="post" action="./controller/insertController.jsp">
+<input type="hidden" name="memberNo" value=<%=session.getAttribute("memberNo") %>>
+    <table>
+        <tr>
+            <th>제목</th>
+            <td><input type="text" name="title"  maxlength="80"
+                       value="">
+            </td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td><textarea name="content" rows="10"></textarea>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+    <input type="submit" value="저장">
+    <input type="button" value="취소" onclick="history.back()">
+</form>
+
+</body>
+</html>

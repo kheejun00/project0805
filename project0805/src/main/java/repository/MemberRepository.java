@@ -1,8 +1,10 @@
-package model;
+package repository;
 
 import java.util.List;
 
-public interface MemberCon {
+import dto.MemberDTO;
+
+public interface MemberRepository {
 	final static String SELECT_ADMINMEMBER = "select * from adminMember where memberNo = ?";
 	final static String SELECT_ALL = "select * from member";
 	final static String INSERT_MEMBER = "insert into member"
@@ -12,12 +14,12 @@ public interface MemberCon {
 	final static String SELECT_WHERE_ID= "select * from member where id = ?";
 	final static String UPDATE_MEMBER = "update member set name = ?, birth = ?, nickname = ?, pw = ?, tel = ?, email = ? where memberNo = ?";
 	
-	Member getMember(int no);
-	Member getMember(String id);
+	MemberDTO getMember(int no);
+	MemberDTO getMember(String id);
 	boolean login(String id, String pw);
-	boolean join(Member member);
+	boolean join(MemberDTO dto);
 	boolean isExist(int no);
 	boolean isAdmin(int no);
-	List<Member> getMembers();
-	void updateMember(Member member);
+	List<MemberDTO> getMembers();
+	void updateMember(MemberDTO dto);
 }

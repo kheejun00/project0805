@@ -1,6 +1,6 @@
-package model;
+package dto;
 
-public class MemberDTO implements Member {
+public class MemberDTO {
 	private int memberNo;
 	private String name;
 	private String birth;

@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<form action="loginController.jsp" method="post">
+	<form action="./controller/loginController.jsp" method="post">
 	아이디:<input type = "text" name="id"><br>
 	비밀번호:<input type = "password" name="pw"><br>
 	<input type="submit" value="로그인">

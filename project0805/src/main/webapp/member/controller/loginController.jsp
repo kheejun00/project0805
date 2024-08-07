@@ -1,10 +1,10 @@
-<%@page import="model.MemberCon"%>
-<%@page import="model.MemberDAO"%>
+<%@page import="repository.MemberRepository"%>
+<%@page import="dao.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("utf-8");
-MemberCon dao = new MemberDAO();
+MemberRepository dao = new MemberDAO();
 String id = request.getParameter("id");
 String pw = request.getParameter("pw");
 %>
@@ -15,7 +15,7 @@ if(dao.login(id,pw)){
 %>
 	<script>
 	alert('로그인 성공.');
-	location.href='index.jsp';
+	location.href='../../index.jsp';
 	</script>
 <%          
 } else {           
@@ -23,6 +23,6 @@ if(dao.login(id,pw)){
 %>
 <script>
 	alert('로그인 실패.');
-	location.href='index.jsp';
+	location.href='../../index.jsp';
 </script>
 

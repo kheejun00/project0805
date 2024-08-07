@@ -1,15 +1,15 @@
-<%@page import="model.MemberDAO"%>
-<%@page import="model.MemberCon"%>
-<%@page import="model.Board"%>
+<%@page import="dto.BoardDTO"%>
+<%@page import="dao.BoardDAO"%>
+<%@page import="dao.MemberDAO"%>
+<%@page import="repository.MemberRepository"%>
+<%@page import="repository.BoardRepository"%>
 <%@page import="java.util.List"%>
-<%@page import="model.BoardDAO"%>
-<%@page import="model.BoardCon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-BoardCon dao = new BoardDAO();
-MemberCon mCon = new MemberDAO();
-List<Board> list = dao.getBoardList();
+BoardRepository bDao = new BoardDAO();
+MemberRepository mDao = new MemberDAO();
+List<BoardDTO> list = bDao.getBoardList();
 Object sessionNo = session.getAttribute("memberNo");
 %>
 <!DOCTYPE html>
@@ -41,23 +41,23 @@ Object sessionNo = session.getAttribute("memberNo");
     </tr>
     
 <%
-for(Board board : list){
+for(BoardDTO dto : list){
 	%>
 	<tr>
-		<td><%=board.getBoardNo() %></td>
+		<td><%=dto.getBoardNo() %></td>
 		<td style="text-align:left;">
-		 <a href="view.jsp?boardNo=<%=board.getBoardNo()%>"><%=board.getTitle() %></a></td>
-		<td><%=mCon.getMember(board.getMemberNo()).getNickname() %></td>
-		<td><%=board.getRegtime() %></td>
-		<td><%=board.getUpRegtime() %></td>
-		<td><%=board.getHits() %></td>
+		 <a href="view.jsp?boardNo=<%=dto.getBoardNo()%>"><%=dto.getTitle() %></a></td>
+		<td><%=mDao.getMember(dto.getMemberNo()).getNickname() %></td>
+		<td><%=dto.getRegtime() %></td>
+		<td><%=dto.getUpRegtime() %></td>
+		<td><%=dto.getHits() %></td>
 	</tr>
 <%
 }
 %>
 </table>
 <br>
-<input type="button" value="글쓰기" onclick="location.href='write.jsp'" <%=sessionNo==null?"disabled":null %>>
+<input type="button" value="글쓰기" onclick="location.href='insert.jsp'" <%=sessionNo==null?"disabled":null %>>
 <input type="button" value="이전" onclick="location.href='../index.jsp'">
 </body>
 </html>

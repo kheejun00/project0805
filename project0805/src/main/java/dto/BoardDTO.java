@@ -1,6 +1,6 @@
-package model;
+package dto;
 
-public class BoardDTO implements Board{
+public class BoardDTO{
 	private int boardNo;
 	private String title;
 	private String regtime;
