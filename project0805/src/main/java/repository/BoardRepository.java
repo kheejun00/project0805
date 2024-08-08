@@ -3,6 +3,7 @@ package repository;
 import java.util.List;
 
 import dto.BoardDTO;
+import dto.ReplyDTO;
 
 public interface BoardRepository {
 	final static String BOARD_LIST = "select * from board";

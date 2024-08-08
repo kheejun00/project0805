@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.BoardDTO;
+import dto.ReplyDTO;
 import repository.BoardRepository;
 import util.JDBCUtil;
 
@@ -153,7 +154,6 @@ public class BoardDAO implements BoardRepository{
 			JDBCUtil.close(pstmt, con);
 		}
 	}
-	
 
 	@Override
 	public boolean setInvisible(int no) {
@@ -167,4 +167,5 @@ public class BoardDAO implements BoardRepository{
 		BoardDTO dto = getBoard(bNo);
 		return dto!=null&&dto.getMemberNo() == mNo?true:false;
 	}
+
 }
